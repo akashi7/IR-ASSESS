@@ -50,16 +50,10 @@ services:
     healthCheckPath: /api/health
 
   # Frontend (Angular Static Site)
-  - type: web
+  - type: static
     name: certificate-frontend
-    runtime: static
-    plan: free
-    region: oregon
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: frontend/dist/certificate-management-frontend
-    envVars:
-      - key: NODE_VERSION
-        value: 18
     routes:
       - type: rewrite
         source: /*
