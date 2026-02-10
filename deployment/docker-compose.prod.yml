@@ -12,7 +12,7 @@ services:
     volumes:
       - /var/lib/postgresql/certificate-app:/var/lib/postgresql/data
     ports:
-      - "5433:5432"  # Different port to avoid conflict
+      - "5433:5432"  
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
