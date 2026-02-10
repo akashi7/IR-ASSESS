@@ -1,19 +1,13 @@
-# Render Blueprint for Certificate Management System
-# https://render.com/docs/blueprint-spec
+databases:
+  - name: certificate-db
+    databaseName: certificate_db
+    user: certificate_user
 
 services:
-  # PostgreSQL Database
-  - type: pserv
-    name: certificate-db
-    plan: free
-    region: oregon
-
   # Backend API (Node.js + Express)
   - type: web
     name: certificate-api
     runtime: node
-    plan: free
-    region: oregon
     buildCommand: cd api && npm install
     startCommand: cd api && npm start
     envVars:
@@ -27,26 +21,6 @@ services:
           property: connectionString
       - key: JWT_SECRET
         generateValue: true
-      - key: DB_HOST
-        fromDatabase:
-          name: certificate-db
-          property: host
-      - key: DB_PORT
-        fromDatabase:
-          name: certificate-db
-          property: port
-      - key: DB_NAME
-        fromDatabase:
-          name: certificate-db
-          property: database
-      - key: DB_USER
-        fromDatabase:
-          name: certificate-db
-          property: user
-      - key: DB_PASSWORD
-        fromDatabase:
-          name: certificate-db
-          property: password
     healthCheckPath: /api/health
 
   # Frontend (Angular Static Site)
