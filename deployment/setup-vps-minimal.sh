@@ -1,10 +1,4 @@
-#!/bin/bash
 
-# Minimal VPS Setup Script - Only installs Docker and Node.js
-# Use this if you already have PM2 and Nginx installed
-# Run this ONCE on the VPS
-#
-# Usage: sudo ./setup-vps-minimal.sh
 
 set -e  # Exit on error
 

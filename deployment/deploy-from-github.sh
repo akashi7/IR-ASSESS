@@ -1,10 +1,3 @@
-#!/bin/bash
-
-# Deployment script for Certificate Management App (GitHub version)
-# Run this on the VPS after cloning from GitHub
-#
-# Prerequisites: Run setup-vps.sh first
-# Usage: bash deployment/deploy-from-github.sh
 
 set -e  # Exit on error
 
