@@ -10,7 +10,6 @@ const { createTestCustomer, generateTestToken } = require('./setup');
 const app = express();
 app.use(express.json());
 
-// Setup routes
 app.post('/api/certificates/simulate', authenticate, certificateController.simulateCertificate);
 app.post('/api/certificates/generate-ui', authenticate, certificateController.generateCertificate);
 app.post('/api/certificates/generate', authenticateApiKey, certificateController.generateCertificate);
@@ -57,7 +56,6 @@ describe('Certificate Controller', () => {
   });
 
   afterEach(async () => {
-    // Cleanup generated certificates
     const uploadsDir = path.join(__dirname, '../uploads/certificates');
     if (fs.existsSync(uploadsDir)) {
       const files = fs.readdirSync(uploadsDir);
@@ -96,7 +94,6 @@ describe('Certificate Controller', () => {
           templateId: template1.id,
           data: {
             recipientName: 'John Doe'
-            // Missing courseName and completionDate
           }
         });
 
@@ -197,8 +194,6 @@ describe('Certificate Controller', () => {
           }
         });
 
-      // Note: This might fail if API secret validation is strict
-      // Adjust based on actual implementation
       expect([201, 401]).toContain(response.status);
     });
 
@@ -236,7 +231,6 @@ describe('Certificate Controller', () => {
           certificates
         });
 
-      // May require valid API secret
       if (response.status === 201) {
         expect(response.body.results).toHaveLength(3);
         expect(response.body.errors).toHaveLength(0);
@@ -260,7 +254,6 @@ describe('Certificate Controller', () => {
 
   describe('GET /api/certificates', () => {
     it('should get certificates for authenticated customer', async () => {
-      // Create certificates for customer1
       const cert1 = await Certificate.create({
         certificateNumber: 'CERT-001',
         templateId: template1.id,
@@ -329,7 +322,6 @@ describe('Certificate Controller', () => {
     });
 
     it('should support pagination', async () => {
-      // Create 25 certificates
       for (let i = 0; i < 25; i++) {
         await Certificate.create({
           certificateNumber: `CERT-${i}`,

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { Customer } = require('../models');
 
-// JWT authentication middleware
+
 const authenticate = async (req, res, next) => {
   try {
     const token = req.header('Authorization')?.replace('Bearer ', '');
@@ -25,7 +25,7 @@ const authenticate = async (req, res, next) => {
   }
 };
 
-// API Key authentication middleware
+// API Key authentication 
 const authenticateApiKey = async (req, res, next) => {
   try {
     const apiKey = req.header('X-API-Key');
@@ -66,8 +66,6 @@ const authenticateAdmin = async (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Check if this is an admin user (you can add an isAdmin field to Customer model)
-    // For simplicity, checking against an env variable
     if (decoded.role !== 'admin') {
       return res.status(403).json({ error: 'Admin access required' });
     }

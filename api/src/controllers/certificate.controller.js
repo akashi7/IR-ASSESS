@@ -1,7 +1,6 @@
 const { Certificate, Template } = require('../models');
 const certificateGenerator = require('../utils/certificateGenerator');
 
-// Simulate certificate generation (preview without saving)
 exports.simulateCertificate = async (req, res) => {
   try {
     const { templateId, data } = req.body;
@@ -17,7 +16,6 @@ exports.simulateCertificate = async (req, res) => {
       return res.status(404).json({ error: 'Template not found' });
     }
 
-    // Validate that all required placeholders are provided
     const missingFields = template.placeholders.filter(
       placeholder => !data[placeholder]
     );
@@ -29,7 +27,6 @@ exports.simulateCertificate = async (req, res) => {
       });
     }
 
-    // Generate preview data
     const previewData = {
       templateName: template.name,
       data,
@@ -53,7 +50,6 @@ exports.simulateCertificate = async (req, res) => {
   }
 };
 
-// Generate a single certificate
 exports.generateCertificate = async (req, res) => {
   try {
     const { templateId, data } = req.body;
@@ -69,7 +65,6 @@ exports.generateCertificate = async (req, res) => {
       return res.status(404).json({ error: 'Template not found' });
     }
 
-    // Validate required fields
     const missingFields = template.placeholders.filter(
       placeholder => !data[placeholder]
     );
@@ -81,7 +76,6 @@ exports.generateCertificate = async (req, res) => {
       });
     }
 
-    // Generate certificate number and signature
     const certificateNumber = certificateGenerator.generateCertificateNumber();
     const signature = certificateGenerator.generateSignature({
       templateId,
@@ -131,7 +125,7 @@ exports.generateCertificate = async (req, res) => {
   }
 };
 
-// Batch generate certificates (for high performance)
+// Batch 
 exports.batchGenerateCertificates = async (req, res) => {
   try {
     const { templateId, certificates } = req.body;
@@ -154,7 +148,6 @@ exports.batchGenerateCertificates = async (req, res) => {
     const results = [];
     const errors = [];
 
-    // Process certificates in parallel for better performance
     const promises = certificates.map(async (certData, index) => {
       try {
         const certificateNumber = certificateGenerator.generateCertificateNumber();
@@ -214,7 +207,6 @@ exports.batchGenerateCertificates = async (req, res) => {
   }
 };
 
-// Get all certificates for the authenticated customer
 exports.getCertificates = async (req, res) => {
   try {
     const { page = 1, limit = 20, status } = req.query;
@@ -252,7 +244,6 @@ exports.getCertificates = async (req, res) => {
   }
 };
 
-// Get a single certificate
 exports.getCertificate = async (req, res) => {
   try {
     const certificate = await Certificate.findOne({
@@ -358,7 +349,6 @@ exports.verifyCertificate = async (req, res) => {
   }
 };
 
-// Revoke certificate
 exports.revokeCertificate = async (req, res) => {
   try {
     const certificate = await Certificate.findOne({

@@ -19,23 +19,6 @@ const Template = sequelize.define('Template', {
   content: {
     type: DataTypes.JSONB,
     allowNull: false,
-    /*
-    Example structure:
-    {
-      "title": "Certificate of Achievement",
-      "fields": [
-        {"key": "recipientName", "label": "Recipient Name", "type": "text"},
-        {"key": "courseName", "label": "Course Name", "type": "text"},
-        {"key": "completionDate", "label": "Completion Date", "type": "date"},
-        {"key": "instructorName", "label": "Instructor Name", "type": "text"}
-      ],
-      "layout": {
-        "orientation": "landscape",
-        "fontSize": 12,
-        "fontFamily": "Helvetica"
-      }
-    }
-    */
   },
   // Placeholders that need to be filled
   placeholders: {

@@ -8,7 +8,6 @@ const { createTestCustomer, generateTestToken } = require('./setup');
 const app = express();
 app.use(express.json());
 
-// Setup routes
 app.post('/api/templates', authenticate, templateController.createTemplate);
 app.get('/api/templates', authenticate, templateController.getTemplates);
 app.get('/api/templates/:id', authenticate, templateController.getTemplate);
@@ -109,7 +108,6 @@ describe('Template Controller', () => {
         placeholders: []
       });
 
-      // Create template for customer2
       await Template.create({
         name: 'Template 3',
         customerId: customer2.id,
@@ -252,7 +250,6 @@ describe('Template Controller', () => {
 
       expect(response.status).toBe(404);
 
-      // Verify template still exists
       const stillExists = await Template.findByPk(template.id);
       expect(stillExists).not.toBeNull();
     });

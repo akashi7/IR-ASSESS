@@ -3,7 +3,6 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const { sequelize } = require('./config/database');
 
-// Load environment variables
 dotenv.config();
 
 const app = express();
@@ -35,7 +34,6 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
-// Database connection with retry logic
 const connectWithRetry = async (retries = 5, delay = 5000) => {
   for (let i = 0; i < retries; i++) {
     try {
@@ -52,12 +50,10 @@ const connectWithRetry = async (retries = 5, delay = 5000) => {
   }
 };
 
-// Database connection and server start
 const startServer = async () => {
   try {
     await connectWithRetry();
 
-    // Sync database models
     await sequelize.sync({ alter: true });
     console.log('Database models synchronized.');
 

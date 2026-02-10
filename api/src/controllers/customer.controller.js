@@ -1,7 +1,6 @@
 const { Customer } = require('../models');
 const { generateApiKey, generateApiSecret } = require('../utils/apiKeyGenerator');
 
-// Get all customers (admin only)
 exports.getAllCustomers = async (req, res) => {
   try {
     const customers = await Customer.findAll({
@@ -15,7 +14,6 @@ exports.getAllCustomers = async (req, res) => {
   }
 };
 
-// Get a single customer
 exports.getCustomer = async (req, res) => {
   try {
     const customer = await Customer.findByPk(req.params.id, {
@@ -33,7 +31,6 @@ exports.getCustomer = async (req, res) => {
   }
 };
 
-// Update customer
 exports.updateCustomer = async (req, res) => {
   try {
     const customer = await Customer.findByPk(req.params.id);
@@ -66,7 +63,6 @@ exports.updateCustomer = async (req, res) => {
   }
 };
 
-// Regenerate API credentials
 exports.regenerateApiCredentials = async (req, res) => {
   try {
     const customer = await Customer.findByPk(req.customerId);

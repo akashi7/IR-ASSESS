@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const { Customer } = require('../models');
 const { generateApiKey, generateApiSecret } = require('../utils/apiKeyGenerator');
 
-// Generate JWT token
 const generateToken = (customer) => {
   return jwt.sign(
     { id: customer.id, email: customer.email },
@@ -11,12 +10,10 @@ const generateToken = (customer) => {
   );
 };
 
-// Register a new customer (for Sec CERTIFICATE company to onboard customers)
 exports.register = async (req, res) => {
   try {
     const { companyName, email, password, contactPerson, phone } = req.body;
 
-    // Check if customer already exists
     const existingCustomer = await Customer.findOne({
       where: { email }
     });
@@ -25,11 +22,9 @@ exports.register = async (req, res) => {
       return res.status(400).json({ error: 'Customer with this email already exists' });
     }
 
-    // Generate API credentials
     const apiKey = generateApiKey();
     const apiSecret = generateApiSecret();
 
-    // Create customer
     const customer = await Customer.create({
       companyName,
       email,
@@ -49,7 +44,7 @@ exports.register = async (req, res) => {
         companyName: customer.companyName,
         email: customer.email,
         apiKey: customer.apiKey,
-        apiSecret: apiSecret // Return plain secret only once
+        apiSecret: apiSecret 
       },
       token
     });
@@ -98,7 +93,6 @@ exports.login = async (req, res) => {
   }
 };
 
-// Get current customer profile
 exports.getProfile = async (req, res) => {
   try {
     const customer = await Customer.findByPk(req.customerId, {

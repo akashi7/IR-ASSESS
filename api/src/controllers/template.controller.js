@@ -1,11 +1,9 @@
 const { Template } = require('../models');
 
-// Create a new template
 exports.createTemplate = async (req, res) => {
   try {
     const { name, description, content, placeholders, styling } = req.body;
 
-    // Extract placeholders from content if not provided
     const extractedPlaceholders = placeholders ||
       (content.fields ? content.fields.map(f => f.key) : []);
 
@@ -28,7 +26,6 @@ exports.createTemplate = async (req, res) => {
   }
 };
 
-// Get all templates for the authenticated customer
 exports.getTemplates = async (req, res) => {
   try {
     const templates = await Template.findAll({
@@ -42,13 +39,12 @@ exports.getTemplates = async (req, res) => {
   }
 };
 
-// Get a single template
 exports.getTemplate = async (req, res) => {
   try {
     const template = await Template.findOne({
       where: {
         id: req.params.id,
-        customerId: req.customerId // Ensure customer owns this template
+        customerId: req.customerId 
       }
     });
 

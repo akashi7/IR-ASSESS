@@ -25,10 +25,7 @@ class CertificateGenerator {
     return `CERT-${timestamp}-${random}`;
   }
 
-  /**
-   * Generate a digital signature for the certificate
-   * This combines certificate data with a secret to create a unique hash
-   */
+  
   generateSignature(certificateData) {
     const dataString = JSON.stringify(certificateData);
     return crypto
@@ -37,9 +34,7 @@ class CertificateGenerator {
       .digest('hex');
   }
 
-  /**
-   * Generate a verification token (QR code data)
-   */
+  
   generateVerificationToken(certificateId, signature) {
     return Buffer.from(`${certificateId}:${signature}`).toString('base64');
   }
@@ -60,7 +55,6 @@ class CertificateGenerator {
         const stream = fs.createWriteStream(filepath);
         doc.pipe(stream);
 
-        // Add certificate title
         doc.fontSize(24)
            .font('Helvetica-Bold')
            .text(template.content.title || 'Certificate', {
@@ -69,7 +63,6 @@ class CertificateGenerator {
 
         doc.moveDown(2);
 
-        // Add certificate fields
         const fields = template.content.fields || [];
         doc.fontSize(14).font('Helvetica');
 
@@ -82,7 +75,6 @@ class CertificateGenerator {
           doc.font('Helvetica').text(value);
         });
 
-        // Add certificate number
         doc.moveDown(2);
         doc.fontSize(10)
            .font('Helvetica')
@@ -90,13 +82,11 @@ class CertificateGenerator {
              align: 'center'
            });
 
-        // Add generation date
         doc.moveDown(0.5);
         doc.text(`Generated on: ${new Date().toLocaleDateString()}`, {
           align: 'center'
         });
 
-        // Add security watermark
         doc.fontSize(10)
            .fillColor('#cccccc')
            .text('This certificate is digitally signed and verifiable', {

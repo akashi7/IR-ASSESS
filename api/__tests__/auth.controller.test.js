@@ -8,7 +8,6 @@ const { createTestCustomer, generateTestToken } = require('./setup');
 const app = express();
 app.use(express.json());
 
-// Setup routes
 app.post('/api/auth/register', authController.register);
 app.post('/api/auth/login', authController.login);
 app.get('/api/auth/profile', authenticate, authController.getProfile);
