@@ -61,7 +61,7 @@ const startServer = async () => {
       console.log(`Server is running on port ${PORT}`);
     });
   } catch (error) {
-    console.error('Unable to connect to the database ui:', error);
+    console.error('Unable to connect to the database ui ff:', error);
     process.exit(1);
   }
 };
