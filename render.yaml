@@ -50,8 +50,9 @@ services:
     healthCheckPath: /api/health
 
   # Frontend (Angular Static Site)
-  - type: static
+  - type: web
     name: certificate-frontend
+    env: static
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: frontend/dist/certificate-management-frontend
     routes:
