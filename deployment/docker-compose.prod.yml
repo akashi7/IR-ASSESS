@@ -1,0 +1,31 @@
+
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: certificate_db_prod
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - /var/lib/postgresql/certificate-app:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"  # Different port to avoid conflict
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - certificate-network
+
+networks:
+  certificate-network:
+    driver: bridge
+    name: certificate-app-network
+
+volumes:
+  db_data:
