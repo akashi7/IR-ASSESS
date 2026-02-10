@@ -6,8 +6,6 @@ services:
   - type: pserv
     name: certificate-db
     plan: free
-    databaseName: certificate_db
-    user: certificate_user
     region: oregon
 
   # Backend API (Node.js + Express)
