@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://certificate-api.onrender.com/api'
+  apiUrl: '/api'  // Relative URL - nginx will proxy to localhost:3001/api
 };
