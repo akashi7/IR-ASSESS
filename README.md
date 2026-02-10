@@ -38,9 +38,9 @@ docker exec certificate_api npm test
 
 ```
 
-**Current Coverage:** 76.87% (35/38 tests passing)
 
----
+
+
 
 ## 📖 Usage
 
