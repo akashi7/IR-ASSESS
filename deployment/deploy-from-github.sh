@@ -203,29 +203,33 @@ sudo cp -r frontend/dist/certificate-management-frontend/* /var/www/certificate-
 # Set proper permissions
 sudo chown -R www-data:www-data /var/www/certificate-app/frontend
 
-# Install nginx config
+# Install nginx config (won't affect existing configs)
 if [ -f /etc/nginx/sites-available/certificate-app ]; then
     print_warn "Nginx config already exists, backing up..."
     sudo cp /etc/nginx/sites-available/certificate-app /etc/nginx/sites-available/certificate-app.backup.$(date +%Y%m%d_%H%M%S)
 fi
 
-print_info "Installing Nginx configuration..."
+print_info "Installing Nginx configuration (separate from your existing apps)..."
 sudo cp deployment/nginx-vps.conf /etc/nginx/sites-available/certificate-app
 
 # Create symlink if it doesn't exist
 if [ ! -L /etc/nginx/sites-enabled/certificate-app ]; then
     sudo ln -s /etc/nginx/sites-available/certificate-app /etc/nginx/sites-enabled/
     print_info "Nginx config symlink created"
+else
+    print_info "Nginx config symlink already exists"
 fi
 
 # Test nginx configuration
-print_info "Testing Nginx configuration..."
+print_info "Testing Nginx configuration (won't break existing configs)..."
 if sudo nginx -t; then
     print_info "Nginx config is valid"
     sudo systemctl reload nginx
     print_info "Nginx reloaded"
 else
     print_error "Nginx configuration has errors"
+    print_warn "Your existing Nginx configs are still intact"
+    print_warn "Check: sudo nginx -t"
     exit 1
 fi
 

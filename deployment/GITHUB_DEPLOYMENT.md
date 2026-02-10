@@ -34,7 +34,7 @@ git push -u origin main
 ssh root@144.91.122.113
 
 # Download and run setup script
-wget https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/deployment/setup-vps.sh
+wget https://raw.githubusercontent.com/akashi7/IR-ASSESS/main/deployment/setup-vps.sh
 chmod +x setup-vps.sh
 sudo ./setup-vps.sh
 
@@ -44,6 +44,7 @@ ssh root@144.91.122.113
 ```
 
 **What the setup script installs:**
+
 - ✅ Docker & Docker Compose
 - ✅ Node.js 18 LTS
 - ✅ PM2 Process Manager
@@ -103,6 +104,7 @@ bash deployment/deploy-from-github.sh
 ## 📦 What Gets Installed on VPS
 
 ### System Packages
+
 - Docker Engine (latest)
 - Docker Compose (latest)
 - Node.js 18 LTS
@@ -112,14 +114,17 @@ bash deployment/deploy-from-github.sh
 - Build tools
 
 ### Services Running
-| Service | Type | Port | Purpose |
-|---------|------|------|---------|
-| PostgreSQL | Docker Container | 5433 | Database |
-| Node.js API | PM2 Process | 3001 | Backend API |
-| Nginx | System Service | 8080 | Frontend + Proxy |
+
+| Service     | Type             | Port | Purpose          |
+| ----------- | ---------------- | ---- | ---------------- |
+| PostgreSQL  | Docker Container | 5433 | Database         |
+| Node.js API | PM2 Process      | 3001 | Backend API      |
+| Nginx       | System Service   | 8080 | Frontend + Proxy |
 
 ### No Conflicts
+
 All ports are different from your existing app:
+
 - Your existing app: ports 80, 3000, etc.
 - Certificate app: ports 8080, 3001, 5433
 
@@ -251,6 +256,7 @@ PORT=3001
 ```
 
 **Security Tips:**
+
 - Use strong passwords (16+ characters)
 - Use random JWT secret (32+ characters)
 - Never commit `.env` to git
@@ -263,6 +269,7 @@ PORT=3001
 ### Setup Script Issues
 
 **Problem: "Docker not found" after setup**
+
 ```bash
 # Log out and back in
 exit
@@ -273,12 +280,14 @@ newgrp docker
 ```
 
 **Problem: "Permission denied" for Docker**
+
 ```bash
 sudo usermod -aG docker $USER
 newgrp docker
 ```
 
 **Problem: Node.js version wrong**
+
 ```bash
 # Remove old Node.js
 sudo apt-get purge nodejs npm
@@ -291,6 +300,7 @@ sudo apt-get install -y nodejs
 ### Deployment Issues
 
 **Problem: Port already in use**
+
 ```bash
 # Check what's using the port
 sudo lsof -i :8080
@@ -301,6 +311,7 @@ sudo kill -9 <PID>
 ```
 
 **Problem: Git clone fails**
+
 ```bash
 # If private repo, setup SSH key
 ssh-keygen -t ed25519 -C "your_email@example.com"
@@ -312,6 +323,7 @@ git clone https://YOUR_TOKEN@github.com/YOUR_USERNAME/YOUR_REPO.git
 ```
 
 **Problem: npm install fails**
+
 ```bash
 # Clear npm cache
 npm cache clean --force
@@ -321,6 +333,7 @@ npm install
 ```
 
 **Problem: Frontend build fails**
+
 ```bash
 # Check Node.js version
 node --version  # Should be 18+
@@ -333,6 +346,7 @@ npm run build
 ### Database Issues
 
 **Problem: Database won't start**
+
 ```bash
 # Check Docker logs
 docker logs certificate_db_prod
@@ -343,6 +357,7 @@ docker-compose -f deployment/docker-compose.prod.yml up -d
 ```
 
 **Problem: Can't connect to database**
+
 ```bash
 # Check if running
 docker ps | grep certificate_db_prod
@@ -354,6 +369,7 @@ docker exec -it certificate_db_prod psql -U cert_user -d certificate_db
 ### API Issues
 
 **Problem: API won't start**
+
 ```bash
 # Check logs
 pm2 logs certificate-api --lines 50
@@ -368,6 +384,7 @@ pm2 restart certificate-api
 ### Nginx Issues
 
 **Problem: Nginx config invalid**
+
 ```bash
 # Test config
 sudo nginx -t
@@ -377,6 +394,7 @@ sudo tail -f /var/log/nginx/error.log
 ```
 
 **Problem: 502 Bad Gateway**
+
 ```bash
 # API not running - check PM2
 pm2 status
@@ -474,6 +492,7 @@ sudo ufw delete allow 8080/tcp
 ## ✅ Quick Reference
 
 ### First Time Setup
+
 ```bash
 ssh root@144.91.122.113
 wget https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/deployment/setup-vps.sh
@@ -487,6 +506,7 @@ bash deployment/deploy-from-github.sh
 ```
 
 ### Update App
+
 ```bash
 cd /var/www/certificate-app
 git pull
@@ -494,6 +514,7 @@ bash deployment/deploy-from-github.sh
 ```
 
 ### View Status
+
 ```bash
 pm2 status
 docker ps
@@ -501,6 +522,7 @@ sudo systemctl status nginx
 ```
 
 ### View Logs
+
 ```bash
 pm2 logs certificate-api
 docker logs certificate_db_prod

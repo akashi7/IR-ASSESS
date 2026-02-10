@@ -20,27 +20,42 @@ This directory contains all the scripts and configurations needed to deploy the 
 
 ### Method 1: Automated GitHub Deployment (Recommended)
 
-1. **Push to GitHub:**
-   ```bash
-   git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
-   git push -u origin main
-   ```
+#### If PM2 & Nginx Already Installed (Your Case):
 
-2. **Setup VPS (once):**
-   ```bash
-   ssh root@144.91.122.113
-   wget https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/deployment/setup-vps.sh
-   chmod +x setup-vps.sh
-   sudo ./setup-vps.sh
-   ```
+Use the **minimal setup** that won't touch your existing services:
 
-3. **Deploy:**
-   ```bash
-   cd /var/www/certificate-app
-   git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git .
-   cp .env.example .env && nano .env
-   bash deployment/deploy-from-github.sh
-   ```
+```bash
+# 1. SSH to VPS
+ssh root@144.91.122.113
+
+# 2. Run minimal setup (only Docker & Node.js)
+wget https://raw.githubusercontent.com/akashi7/IR-ASSESS/main/deployment/setup-vps-minimal.sh
+chmod +x setup-vps-minimal.sh
+sudo ./setup-vps-minimal.sh
+
+# 3. Log out and back in
+exit
+ssh root@144.91.122.113
+
+# 4. Deploy
+cd /var/www/certificate-app
+git clone https://github.com/akashi7/IR-ASSESS.git .
+cp .env.example .env && nano .env
+bash deployment/deploy-from-github.sh
+```
+
+**Read:** [EXISTING_SETUP.md](EXISTING_SETUP.md) - Deployment with existing PM2/Nginx
+
+#### If Fresh VPS (No PM2/Nginx):
+
+Use the full setup:
+
+```bash
+ssh root@144.91.122.113
+wget https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/deployment/setup-vps.sh
+chmod +x setup-vps.sh
+sudo ./setup-vps.sh
+```
 
 **Read:** [GITHUB_DEPLOYMENT.md](GITHUB_DEPLOYMENT.md)
 
