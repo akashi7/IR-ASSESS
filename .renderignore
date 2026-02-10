@@ -1,0 +1,11 @@
+node_modules/
+.git/
+.env
+coverage/
+uploads/
+dist/
+*.log
+.DS_Store
+__tests__/
+*.test.js
+jest.config.js
