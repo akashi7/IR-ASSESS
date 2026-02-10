@@ -34,7 +34,7 @@ print_error() {
 }
 
 # Configuration
-VPS_IP="144.91.122.113"
+VPS_IP="YOUR_VPS_IP"
 APP_DIR="/var/www/certificate-app"
 FRONTEND_PORT=8080
 API_PORT=3001
