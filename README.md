@@ -173,18 +173,3 @@ docker compose logs -f frontend
 ```bash
 docker exec -it certificate_db psql -U postgres -d certificate_db
 ```
-
----
-
-## 🎯 Features
-
-✅ Customer registration and authentication
-✅ Certificate template management
-✅ Single and batch certificate generation
-✅ PDF certificate download
-✅ Certificate verification with digital signatures
-✅ API key authentication for programmatic access
-✅ Template isolation (customers only see their own)
-✅ Certificate revocation
-
----
